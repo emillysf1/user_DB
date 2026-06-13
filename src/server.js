@@ -51,6 +51,9 @@ app.delete('/users/:id', async (req, res) => {
         const id = req.params.id;
         const rows = await pool.query('DELETE FROM user WHERE id = ?;',[id]
     );
+    if(rows[0].affectedRows == 0){
+        throw new Error("Erro ao deletar usuário")
+    }
     res.status(200).json({msg: "Usuario deletado com sucesso!"})
     }catch(erro){
         console.error("Erro ao deletar usuários");
